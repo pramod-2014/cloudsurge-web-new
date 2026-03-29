@@ -1,0 +1,23 @@
+jobs:
+  - job: PushDockerImage
+    displayName: "Push Docker Image"
+    dependsOn: BuildDockerImage   # build job ka naam same hona chahiye
+    pool:
+      vmImage: 'ubuntu-latest'
+
+    steps:
+      - task: Docker@2
+        displayName: "Login to Docker Hub"
+        inputs:
+          command: 'login'
+          containerRegistry: 'dockerhub-service-connection'
+
+      - task: Docker@2
+        displayName: "Push Docker Image"
+        inputs:
+          command: 'push'
+          containerRegistry: 'dockerhub-service-connection'
+          repository: 'prmd77/temlate-image'
+          tags: |
+            latest
+            $(Build.BuildId)
