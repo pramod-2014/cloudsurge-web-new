@@ -1,11 +1,11 @@
 trigger:
-- main   # ya jo tera branch hai
+- main
 
 stages:
 - stage: BuildAndPush
   displayName: "Build and Push Stage"
 
   jobs:
-    - template: build.yml
+    - template: templates/build.yml   ✅
 
-    - template: push.yml
+    - template: templates/push.yml    ✅
