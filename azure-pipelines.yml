@@ -1,11 +1,13 @@
-trigger:
-- main
+trigger: none
 
-stages:
-- stage: BuildAndPush
-  displayName: "Build and Push Stage"
+pool:
+  vmImage: 'ubuntu-latest'
 
-  jobs:
-    - template: templates/build.yml   ✅
-
-    - template: templates/push.yml    ✅
+steps:
+- task: Kubernetes@1
+  displayName: "Test Kubernetes Connection"
+  inputs:
+    connectionType: 'Kubernetes Service Connection'
+    kubernetesServiceEndpoint: 'aws-vm-kubernetes-service-connection'
+    command: 'get'
+    arguments: 'nodes'
